@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { Header } from './components/header/header';
 
 export interface Tarefa {
   id: number;
@@ -52,7 +53,13 @@ function App() {
 
   return (
     <>
-      
+      <Header />
+      <div className="App">
+        <div className="input-container">
+          <input type="text" placeholder="Adicione uma nova tarefa" value={inputTarefa} onChange={(e) => setInputTarefa(e.target.value)} />
+          <button onClick={addTarefa}>Adicionar</button>
+        </div>
+      </div>
     </>
   )
 }
