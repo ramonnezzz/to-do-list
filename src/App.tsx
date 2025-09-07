@@ -12,39 +12,25 @@ export interface Tarefa {
 function App() {
   const [tarefa, setTarefas] = useState<Tarefa[]>([]);
   const [inputTarefa, setInputTarefa] = useState("");
-  function addTarefa(){
-    if(inputTarefa.trim() === '')return;
+  function addTarefa() {
+    if (inputTarefa.trim() === '') return;
 
-    const novaTarefa = {
+    const novaTarefa: Tarefa = {
       id: Math.random(),
       tarefa: inputTarefa,
       selecionado: false,
-
+      completado: false,
     };
-    setTarefas([...tarefa, novaTarefa]); setInputTarefa('');
+    setTarefas([...tarefa, novaTarefa]);
+    setInputTarefa('');
   }
 
-  function selecionarTarefa(tarefaSelecionada: Tarefa){
-    const tarefasAtualizadas = tarefa.map((tarefa) => ({...tarefa, selecionado: tarefa.id === tarefaSelecionada.id ? !tarefa.selecionado : false}));
-    setTarefas(tarefasAtualizadas);
-  }
-
-  function completarTarefa(){
-    const tarefaSelecionada = tarefa.find((tarefa) => tarefa.selecionado);
-    if(!tarefaSelecionada) return;
-
-    const tarefasAtualizadas = tarefa.map((tarefa) => {
-      if(tarefa.id === tarefaSelecionada.id){
-        return {...tarefa, selecionado: false, completado: true};
-      }
-      return tarefa;
-    });
-    setTarefas(tarefasAtualizadas);
-  }
-
-  function limparTarefasCompletadas(){
-    const tarefasNaoCompletadas = tarefa.filter((tarefa) => !tarefa.completado);
-    setTarefas(tarefasNaoCompletadas);
+  function toggleCompletarTarefa(id: number) {
+    setTarefas(tarefa =>
+      tarefa.map(t =>
+        t.id === id ? { ...t, completado: !t.completado } : t
+      )
+    );
   }
 
 
